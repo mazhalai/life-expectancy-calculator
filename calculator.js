@@ -10,6 +10,65 @@ class LifeExpectancyCalculator {
         this.initializeEventListeners();
         this.loadScenarios();
         this.updateSliderValues();
+        this.setupModalHandlers();
+    }
+
+    setupModalHandlers() {
+        const modal = document.getElementById('infoModal');
+        const closeBtn = document.querySelector('.close');
+
+        // Close button
+        closeBtn.addEventListener('click', () => {
+            modal.classList.remove('show');
+        });
+
+        // Click outside modal to close
+        window.addEventListener('click', (event) => {
+            if (event.target === modal) {
+                modal.classList.remove('show');
+            }
+        });
+
+        // Info buttons
+        document.querySelectorAll('.info-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                const infoKey = btn.getAttribute('data-info');
+                this.showInfoModal(infoKey);
+            });
+        });
+    }
+
+    showInfoModal(infoKey) {
+        const modal = document.getElementById('infoModal');
+        const modalBody = document.getElementById('modalBody');
+
+        if (!infoData[infoKey]) {
+            console.warn(`No info found for key: ${infoKey}`);
+            return;
+        }
+
+        const info = infoData[infoKey];
+        let html = `
+            <h3>${info.title}</h3>
+            <p>${info.description}</p>
+        `;
+
+        if (info.research && info.research.length > 0) {
+            html += '<div class="research-links"><h4>Research & References</h4>';
+            info.research.forEach(ref => {
+                html += `
+                    <div class="research-link">
+                        <a href="${ref.url}" target="_blank" rel="noopener noreferrer">${ref.title}</a>
+                        <span class="research-authors">${ref.authors}</span>
+                    </div>
+                `;
+            });
+            html += '</div>';
+        }
+
+        modalBody.innerHTML = html;
+        modal.classList.add('show');
     }
 
     initializeEventListeners() {
