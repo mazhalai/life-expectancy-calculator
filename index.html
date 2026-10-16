@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life Expectancy Calculator</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Life Expectancy Calculator</h1>
+            <p>Estimate your life expectancy based on health metrics and lifestyle factors</p>
+        </header>
+
+        <main>
+            <div class="content-wrapper">
+                <!-- Input Form -->
+                <section class="input-section">
+                    <div class="form-group">
+                        <h2>Demographics</h2>
+                        
+                        <div class="input-row">
+                            <label for="age">Age (years)</label>
+                            <button class="info-btn" data-info="age">?</button>
+                        </div>
+                        <input type="number" id="age" min="18" max="120" value="35" class="input-field">
+                        
+                        <div class="input-row">
+                            <label for="sex">Sex</label>
+                            <button class="info-btn" data-info="sex">?</button>
+                        </div>
+                        <select id="sex" class="input-field">
+                            <option value="male">Male</option>
+                            <option value="female">Female</option>
+                        </select>
+                        
+                        <div class="input-row">
+                            <label for="height">Height (cm)</label>
+                            <button class="info-btn" data-info="height">?</button>
+                        </div>
+                        <input type="number" id="height" min="100" max="250" value="175" class="input-field">
+                        
+                        <div class="input-row">
+                            <label for="weight">Weight (kg)</label>
+                            <button class="info-btn" data-info="weight">?</button>
+                        </div>
+                        <input type="number" id="weight" min="30" max="300" value="75" class="input-field">
+                    </div>
+
+                    <div class="form-group">
+                        <h2>Lifestyle</h2>
+                        
+                        <div class="input-row">
+                            <label for="smoking">Smoking Status</label>
+                            <button class="info-btn" data-info="smoking">?</button>
+                        </div>
+                        <select id="smoking" class="input-field">
+                            <option value="never">Never smoked</option>
+                            <option value="former">Former smoker</option>
+                            <option value="current">Current smoker</option>
+                        </select>
+                        
+                        <div class="input-row">
+                            <label for="exercise">Exercise (days per week)</label>
+                            <button class="info-btn" data-info="exercise">?</button>
+                        </div>
+                        <input type="range" id="exercise" min="0" max="7" value="0" class="slider">
+                        <span id="exerciseValue">0</span> days/week
+                        
+                        <div class="input-row">
+                            <label for="alcohol">Alcohol Consumption (drinks per week)</label>
+                            <button class="info-btn" data-info="alcohol">?</button>
+                        </div>
+                        <input type="range" id="alcohol" min="0" max="30" value="0" class="slider">
+                        <span id="alcoholValue">0</span> drinks/week
+                        
+                        <div class="input-row">
+                            <label for="sleep">Average Sleep (hours per night)</label>
+                            <button class="info-btn" data-info="sleep">?</button>
+                        </div>
+                        <input type="range" id="sleep" min="4" max="12" value="7" class="slider">
+                        <span id="sleepValue">7</span> hours
+                    </div>
+
+                    <div class="form-group">
+                        <h2>Medical Metrics</h2>
+                        
+                        <div class="input-row">
+                            <label for="systolic">Blood Pressure - Systolic (mmHg)</label>
+                            <button class="info-btn" data-info="blood-pressure">?</button>
+                        </div>
+                        <input type="number" id="systolic" min="80" max="200" value="120" class="input-field">
+                        
+                        <label for="diastolic">Blood Pressure - Diastolic (mmHg)</label>
+                        <input type="number" id="diastolic" min="50" max="130" value="80" class="input-field">
+                        
+                        <div class="input-row">
+                            <label for="totalCholesterol">Total Cholesterol (mg/dL)</label>
+                            <button class="info-btn" data-info="cholesterol">?</button>
+                        </div>
+                        <input type="number" id="totalCholesterol" min="100" max="400" value="200" class="input-field">
+                        
+                        <label for="hdl">HDL Cholesterol (mg/dL)</label>
+                        <input type="number" id="hdl" min="20" max="100" value="50" class="input-field">
+                    </div>
+
+                    <div class="form-group">
+                        <h2>Health Conditions</h2>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="diabetes" class="checkbox-field">
+                            Diabetes
+                            <button class="info-btn" data-info="diabetes">?</button>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="hypertension" class="checkbox-field">
+                            Hypertension
+                            <button class="info-btn" data-info="hypertension">?</button>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="heartDisease" class="checkbox-field">
+                            Heart Disease
+                            <button class="info-btn" data-info="heart-disease">?</button>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="familyHistoryHD" class="checkbox-field">
+                            Family History of Heart Disease
+                            <button class="info-btn" data-info="family-history">?</button>
+                        </label>
+                        
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="depression" class="checkbox-field">
+                            Depression/Mental Health Issues
+                            <button class="info-btn" data-info="depression">?</button>
+                        </label>
+                    </div>
+
+                    <button id="calculateBtn" class="btn-primary">Calculate</button>
+                </section>
+
+                <!-- Results Section -->
+                <section class="results-section">
+                    <div class="result-card">
+                        <h2>Estimated Life Expectancy</h2>
+                        <div class="result-value" id="resultValue">-</div>
+                        <p id="resultMessage" class="result-message"></p>
+                    </div>
+
+                    <div class="risk-breakdown">
+                        <h3>Risk Factor Breakdown</h3>
+                        <div id="riskFactors" class="risk-factors-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="comparison-section">
+                        <h3>Scenario Comparison</h3>
+                        <button id="saveScenarioBtn" class="btn-secondary">Save Current as Scenario</button>
+                        <div id="scenarios" class="scenarios-list">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <button id="exportBtn" class="btn-secondary">Export Report</button>
+                </section>
+            </div>
+        </main>
+
+        <footer>
+            <p><small>Disclaimer: This calculator is for educational purposes only and should not replace professional medical advice.</small></p>
+        </footer>
+    </div>
+
+    <!-- Info Popup Modal -->
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <script src="info-data.js"></script>
+    <script src="calculator.js"></script>
+</body>
+</html>
