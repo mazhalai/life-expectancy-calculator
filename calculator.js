@@ -11,6 +11,7 @@ class LifeExpectancyCalculator {
         this.loadScenarios();
         this.updateSliderValues();
         this.setupModalHandlers();
+        this.setupUnitToggleHandlers();
     }
 
     setupModalHandlers() {
@@ -71,6 +72,119 @@ class LifeExpectancyCalculator {
         modal.classList.add('show');
     }
 
+    setupUnitToggleHandlers() {
+        // Height unit toggle
+        const heightUnitCm = document.getElementById('heightUnitCm');
+        const heightUnitFtIn = document.getElementById('heightUnitFtIn');
+        const heightCmInput = document.getElementById('heightCmInput');
+        const heightFtInInput = document.getElementById('heightFtInInput');
+        const heightCm = document.getElementById('heightCm');
+        const heightFt = document.getElementById('heightFt');
+        const heightIn = document.getElementById('heightIn');
+
+        if (heightUnitCm) {
+            heightUnitCm.addEventListener('click', () => {
+                heightUnitCm.classList.add('active');
+                heightUnitFtIn.classList.remove('active');
+                heightCmInput.style.display = 'flex';
+                heightFtInInput.style.display = 'none';
+                
+                // Convert ft/in to cm if values exist
+                if (heightFt.value && heightIn.value) {
+                    const cm = (parseInt(heightFt.value) * 30.48) + (parseInt(heightIn.value) * 2.54);
+                    heightCm.value = Math.round(cm);
+                }
+                this.calculate();
+            });
+        }
+
+        if (heightUnitFtIn) {
+            heightUnitFtIn.addEventListener('click', () => {
+                heightUnitFtIn.classList.add('active');
+                heightUnitCm.classList.remove('active');
+                heightCmInput.style.display = 'none';
+                heightFtInInput.style.display = 'flex';
+                
+                // Convert cm to ft/in if value exists
+                if (heightCm.value) {
+                    const totalCm = parseInt(heightCm.value);
+                    const feet = Math.floor(totalCm / 30.48);
+                    const inches = Math.round((totalCm % 30.48) / 2.54);
+                    heightFt.value = feet;
+                    heightIn.value = inches;
+                }
+                this.calculate();
+            });
+        }
+
+        // Weight unit toggle
+        const weightUnitKg = document.getElementById('weightUnitKg');
+        const weightUnitLbs = document.getElementById('weightUnitLbs');
+        const weightKgInput = document.getElementById('weightKgInput');
+        const weightLbsInput = document.getElementById('weightLbsInput');
+        const weightKg = document.getElementById('weightKg');
+        const weightLbs = document.getElementById('weightLbs');
+
+        if (weightUnitKg) {
+            weightUnitKg.addEventListener('click', () => {
+                weightUnitKg.classList.add('active');
+                weightUnitLbs.classList.remove('active');
+                weightKgInput.style.display = 'flex';
+                weightLbsInput.style.display = 'none';
+                
+                // Convert lbs to kg if value exists
+                if (weightLbs.value) {
+                    const kg = parseInt(weightLbs.value) * 0.453592;
+                    weightKg.value = Math.round(kg);
+                }
+                this.calculate();
+            });
+        }
+
+        if (weightUnitLbs) {
+            weightUnitLbs.addEventListener('click', () => {
+                weightUnitLbs.classList.add('active');
+                weightUnitKg.classList.remove('active');
+                weightKgInput.style.display = 'none';
+                weightLbsInput.style.display = 'flex';
+                
+                // Convert kg to lbs if value exists
+                if (weightKg.value) {
+                    const lbs = parseInt(weightKg.value) * 2.20462;
+                    weightLbs.value = Math.round(lbs);
+                }
+                this.calculate();
+            });
+        }
+
+        // Add input listeners for unit toggle inputs
+        [heightCm, heightFt, heightIn, weightKg, weightLbs].forEach(input => {
+            if (input) {
+                input.addEventListener('change', () => this.calculate());
+                input.addEventListener('input', () => {
+                    // Auto-sync conversions
+                    if (input === heightCm && !heightUnitCm.classList.contains('active')) {
+                        return;
+                    }
+                    if (input === heightFt || input === heightIn) {
+                        if (heightUnitFtIn.classList.contains('active') && heightFt.value && heightIn.value) {
+                            const cm = (parseInt(heightFt.value) * 30.48) + (parseInt(heightIn.value) * 2.54);
+                            heightCm.value = Math.round(cm);
+                        }
+                    }
+                    if (input === weightKg && weightUnitKg.classList.contains('active')) {
+                        const lbs = parseInt(weightKg.value) * 2.20462;
+                        weightLbs.value = Math.round(lbs);
+                    }
+                    if (input === weightLbs && weightUnitLbs.classList.contains('active')) {
+                        const kg = parseInt(weightLbs.value) * 0.453592;
+                        weightKg.value = Math.round(kg);
+                    }
+                });
+            }
+        });
+    }
+
     initializeEventListeners() {
         // Input change listeners
         document.getElementById('calculateBtn').addEventListener('click', () => this.calculate());
@@ -100,11 +214,36 @@ class LifeExpectancyCalculator {
     }
 
     getInputs() {
+        // Get height in centimeters
+        let heightInCm;
+        const heightUnitCm = document.getElementById('heightUnitCm');
+        if (heightUnitCm && heightUnitCm.classList.contains('active')) {
+            // Using cm
+            heightInCm = parseInt(document.getElementById('heightCm').value) || 0;
+        } else {
+            // Using ft/in
+            const feet = parseInt(document.getElementById('heightFt').value) || 0;
+            const inches = parseInt(document.getElementById('heightIn').value) || 0;
+            heightInCm = (feet * 30.48) + (inches * 2.54);
+        }
+
+        // Get weight in kilograms
+        let weightInKg;
+        const weightUnitKg = document.getElementById('weightUnitKg');
+        if (weightUnitKg && weightUnitKg.classList.contains('active')) {
+            // Using kg
+            weightInKg = parseInt(document.getElementById('weightKg').value) || 0;
+        } else {
+            // Using lbs
+            const lbs = parseInt(document.getElementById('weightLbs').value) || 0;
+            weightInKg = lbs * 0.453592;
+        }
+
         return {
             age: parseInt(document.getElementById('age').value),
             sex: document.getElementById('sex').value,
-            height: parseInt(document.getElementById('height').value),
-            weight: parseInt(document.getElementById('weight').value),
+            height: heightInCm,
+            weight: weightInKg,
             smoking: document.getElementById('smoking').value,
             exercise: parseInt(document.getElementById('exercise').value),
             alcohol: parseInt(document.getElementById('alcohol').value),
@@ -356,8 +495,8 @@ Generated: ${new Date().toLocaleString()}
 DEMOGRAPHICS
 Age: ${inputs.age} years
 Sex: ${inputs.sex}
-Height: ${inputs.height} cm
-Weight: ${inputs.weight} kg
+Height: ${inputs.height.toFixed(1)} cm
+Weight: ${inputs.weight.toFixed(1)} kg
 BMI: ${(this.calculateBMI(inputs.height, inputs.weight)).toFixed(1)}
 
 LIFESTYLE
