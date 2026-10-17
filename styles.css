@@ -253,7 +253,7 @@ label {
 
 /* Modal Styling */
 .modal {
-    display: none;
+    display: none !important;
     position: fixed;
     z-index: 1000;
     left: 0;
@@ -265,7 +265,7 @@ label {
 }
 
 .modal.show {
-    display: flex;
+    display: flex !important;
     align-items: center;
     justify-content: center;
 }
