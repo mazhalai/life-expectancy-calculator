@@ -128,5 +128,57 @@ const infoData = {
             { title: 'Mental health, depression, and cardiovascular disease outcomes', url: 'https://scholar.google.com/scholar?q=depression+heart+disease+mortality', authors: 'American Psychosomatic Society' },
             { title: 'Psychological stress and life expectancy', url: 'https://scholar.google.com/scholar?q=psychological+stress+life+expectancy', authors: 'Psychological Medicine' }
         ]
+    },
+    'medication-statin': {
+        title: 'Statins',
+        description: 'Statins lower LDL cholesterol and reduce major vascular events by about 22% per 1 mmol/L LDL reduction. Counted only with heart disease, diabetes or high cholesterol (about +1 to +1.5 years). Examples: atorvastatin, simvastatin, rosuvastatin.',
+        research: [
+            { title: 'Efficacy and safety of LDL-lowering therapy: CTT meta-analysis', url: 'https://scholar.google.com/scholar?q=cholesterol+treatment+trialists+statin+meta-analysis', authors: 'Cholesterol Treatment Trialists Collaboration, Lancet' }
+        ]
+    },
+    'medication-ace-arb': {
+        title: 'ACE Inhibitors / ARBs',
+        description: 'Reduce mortality in heart failure, post-MI and diabetic kidney disease, and lower blood pressure. Counted only with hypertension, heart disease or diabetes (about +1 year). Examples: lisinopril, losartan.',
+        research: [
+            { title: 'Effects of ramipril on cardiovascular events (HOPE)', url: 'https://scholar.google.com/scholar?q=HOPE+study+ramipril+cardiovascular+events', authors: 'NEJM 2000' }
+        ]
+    },
+    'medication-beta-blocker': {
+        title: 'Beta-Blockers',
+        description: 'Clear survival benefit after myocardial infarction and in heart failure; little benefit in uncomplicated hypertension. Counted only with heart disease (about +1 year). Examples: metoprolol, carvedilol.',
+        research: [
+            { title: 'Beta-blockers after myocardial infarction', url: 'https://scholar.google.com/scholar?q=beta+blockers+myocardial+infarction+mortality', authors: 'ACC/AHA guidelines' }
+        ]
+    },
+    'medication-diabetes': {
+        title: 'Diabetes Medications',
+        description: 'SGLT2 inhibitors, GLP-1 agonists and metformin show cardiovascular or mortality benefit. Insulin and sulfonylureas mostly reflect disease severity and are not counted. Counted only with diabetes (about +1 year).',
+        research: [
+            { title: 'Empagliflozin, cardiovascular outcomes and mortality (EMPA-REG)', url: 'https://scholar.google.com/scholar?q=EMPA-REG+outcome+empagliflozin+mortality', authors: 'NEJM 2015' },
+            { title: '10-year follow-up of intensive glucose control (UKPDS 80)', url: 'https://scholar.google.com/scholar?q=UKPDS+80+metformin+follow-up', authors: 'NEJM 2008' }
+        ]
+    },
+    'medication-opioid': {
+        title: 'Chronic Opioids',
+        description: 'Long-term daily opioid use is associated with higher all-cause mortality (overdose, respiratory and cardiovascular causes). Estimate is confounded by underlying pain and substance use (about -3 years).',
+        research: [
+            { title: 'Prescription opioids and mortality (Ray et al.)', url: 'https://scholar.google.com/scholar?q=long-term+opioid+therapy+mortality+Ray+JAMA+2016', authors: 'JAMA 2016' },
+            { title: 'CDC Clinical Practice Guideline for Prescribing Opioids', url: 'https://scholar.google.com/scholar?q=CDC+opioid+prescribing+guideline+2022', authors: 'CDC' }
+        ]
+    },
+    'medication-steroid': {
+        title: 'Chronic Oral Steroids',
+        description: 'Long-term daily glucocorticoids raise risk of infection, diabetes, osteoporosis and cardiovascular disease. Estimate is confounded by the underlying disease (about -2 years).',
+        research: [
+            { title: 'Long-term glucocorticoid therapy and adverse events', url: 'https://scholar.google.com/scholar?q=long-term+glucocorticoid+adverse+events+mortality', authors: 'Annals of Internal Medicine' }
+        ]
+    },
+    'medication-nsaid': {
+        title: 'Chronic NSAIDs',
+        description: 'Daily long-term NSAID use raises risk of cardiovascular events, GI bleeding and kidney injury. Occasional use is not counted (about -1 year).',
+        research: [
+            { title: 'Vascular and upper GI effects of NSAIDs (CNT Collaboration)', url: 'https://scholar.google.com/scholar?q=coxib+traditional+NSAID+trialists+collaboration', authors: 'Lancet 2013' },
+            { title: 'FDA NSAID cardiovascular risk warning', url: 'https://scholar.google.com/scholar?q=FDA+NSAID+heart+attack+stroke+warning', authors: 'FDA' }
+        ]
     }
 };

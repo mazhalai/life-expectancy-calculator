@@ -160,6 +160,48 @@
                         </label>
                     </div>
 
+                    <div class="form-group">
+                        <details>
+                            <summary><h2 style="display:inline">Medications (optional)</h2></summary>
+                            <p><small>Check only medications you take regularly as prescribed. Enter your current, treated BP and cholesterol above. Protective medications only count alongside a related condition.</small></p>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="medStatin" class="checkbox-field">
+                                Statin (cholesterol)
+                                <button class="info-btn" data-info="medication-statin">?</button>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="medAceArb" class="checkbox-field">
+                                ACE inhibitor / ARB
+                                <button class="info-btn" data-info="medication-ace-arb">?</button>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="medBetaBlocker" class="checkbox-field">
+                                Beta-blocker
+                                <button class="info-btn" data-info="medication-beta-blocker">?</button>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="medDiabetes" class="checkbox-field">
+                                SGLT2 inhibitor / GLP-1 agonist / metformin
+                                <button class="info-btn" data-info="medication-diabetes">?</button>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="medOpioid" class="checkbox-field">
+                                Opioids (daily, 3+ months)
+                                <button class="info-btn" data-info="medication-opioid">?</button>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="medSteroid" class="checkbox-field">
+                                Oral steroids (daily, 3+ months)
+                                <button class="info-btn" data-info="medication-steroid">?</button>
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="medNsaid" class="checkbox-field">
+                                NSAIDs (daily, 3+ months)
+                                <button class="info-btn" data-info="medication-nsaid">?</button>
+                            </label>
+                        </details>
+                    </div>
+
                     <button id="calculateBtn" class="btn-primary">Calculate</button>
                 </section>
 

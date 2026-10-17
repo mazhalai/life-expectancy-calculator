@@ -256,7 +256,14 @@ class LifeExpectancyCalculator {
             hypertension: document.getElementById('hypertension').checked,
             heartDisease: document.getElementById('heartDisease').checked,
             familyHistoryHD: document.getElementById('familyHistoryHD').checked,
-            depression: document.getElementById('depression').checked
+            depression: document.getElementById('depression').checked,
+            medStatin: document.getElementById('medStatin').checked,
+            medAceArb: document.getElementById('medAceArb').checked,
+            medBetaBlocker: document.getElementById('medBetaBlocker').checked,
+            medDiabetes: document.getElementById('medDiabetes').checked,
+            medOpioid: document.getElementById('medOpioid').checked,
+            medSteroid: document.getElementById('medSteroid').checked,
+            medNsaid: document.getElementById('medNsaid').checked
         };
     }
 
@@ -379,6 +386,41 @@ class LifeExpectancyCalculator {
         if (inputs.depression) {
             adjustment -= 3;
             factors.push({ name: 'Depression/Mental Health Issues', impact: -3, category: 'negative' });
+        }
+
+        // Medications (protective effects require a related condition; capped to avoid over-crediting)
+        const medFactors = [];
+        if (inputs.medStatin && (inputs.heartDisease || inputs.diabetes || inputs.totalCholesterol >= 240)) {
+            medFactors.push({ name: 'Statin Use', impact: inputs.heartDisease ? 1.5 : 1 });
+        }
+        if (inputs.medAceArb && (inputs.hypertension || inputs.heartDisease || inputs.diabetes)) {
+            medFactors.push({ name: 'ACE Inhibitor/ARB Use', impact: 1 });
+        }
+        if (inputs.medBetaBlocker && inputs.heartDisease) {
+            medFactors.push({ name: 'Beta-Blocker Use', impact: 1 });
+        }
+        if (inputs.medDiabetes && inputs.diabetes) {
+            medFactors.push({ name: 'Diabetes Medication (SGLT2/GLP-1/Metformin)', impact: 1 });
+        }
+        const protectiveCap = 3;
+        let protectiveTotal = medFactors.reduce((sum, f) => sum + f.impact, 0);
+        const scale = protectiveTotal > protectiveCap ? protectiveCap / protectiveTotal : 1;
+        medFactors.forEach(f => {
+            const impact = Math.round(f.impact * scale * 10) / 10;
+            adjustment += impact;
+            factors.push({ name: f.name, impact: +impact, category: 'positive' });
+        });
+        if (inputs.medOpioid) {
+            adjustment -= 3;
+            factors.push({ name: 'Chronic Opioid Use', impact: -3, category: 'negative' });
+        }
+        if (inputs.medSteroid) {
+            adjustment -= 2;
+            factors.push({ name: 'Chronic Steroid Use', impact: -2, category: 'negative' });
+        }
+        if (inputs.medNsaid) {
+            adjustment -= 1;
+            factors.push({ name: 'Chronic NSAID Use', impact: -1, category: 'negative' });
         }
 
         // Age adjustment (older age typically has more risk)
@@ -516,6 +558,15 @@ Hypertension: ${inputs.hypertension ? 'Yes' : 'No'}
 Heart Disease: ${inputs.heartDisease ? 'Yes' : 'No'}
 Family History of Heart Disease: ${inputs.familyHistoryHD ? 'Yes' : 'No'}
 Depression/Mental Health: ${inputs.depression ? 'Yes' : 'No'}
+
+MEDICATIONS
+Statin (cholesterol): ${inputs.medStatin ? 'Yes' : 'No'}
+ACE inhibitor / ARB: ${inputs.medAceArb ? 'Yes' : 'No'}
+Beta-blocker: ${inputs.medBetaBlocker ? 'Yes' : 'No'}
+SGLT2 inhibitor / GLP-1 agonist / metformin: ${inputs.medDiabetes ? 'Yes' : 'No'}
+Opioids (daily, 3+ months): ${inputs.medOpioid ? 'Yes' : 'No'}
+Oral steroids (daily, 3+ months): ${inputs.medSteroid ? 'Yes' : 'No'}
+NSAIDs (daily, 3+ months): ${inputs.medNsaid ? 'Yes' : 'No'}
 
 RESULTS
 Estimated Life Expectancy: ${resultValue} years
