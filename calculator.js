@@ -89,8 +89,74 @@ class LifeExpectancyCalculator {
             input.addEventListener('change', () => this.calculate());
         });
 
+        this.heightUnit = 'cm';
+        this.weightUnit = 'kg';
+        document.querySelectorAll('#heightUnitCm, #heightUnitFtIn').forEach(btn => {
+            btn.addEventListener('click', () => this.setHeightUnit(btn.dataset.unit));
+        });
+        document.querySelectorAll('#weightUnitKg, #weightUnitLbs').forEach(btn => {
+            btn.addEventListener('click', () => this.setWeightUnit(btn.dataset.unit));
+        });
+
         document.getElementById('saveScenarioBtn').addEventListener('click', () => this.saveScenario());
         document.getElementById('exportBtn').addEventListener('click', () => this.exportReport());
+    }
+
+    clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+    }
+
+    readHeightCm() {
+        if (this.heightUnit === 'ft-in') {
+            const ft = this.clamp(parseInt(document.getElementById('heightFt').value) || 0, 3, 8);
+            const inch = this.clamp(parseInt(document.getElementById('heightIn').value) || 0, 0, 11);
+            return this.clamp(Math.round(ft * 30.48 + inch * 2.54), 100, 250);
+        }
+        return this.clamp(parseFloat(document.getElementById('heightCm').value) || 175, 100, 250);
+    }
+
+    readWeightKg() {
+        if (this.weightUnit === 'lbs') {
+            const lbs = this.clamp(parseFloat(document.getElementById('weightLbs').value) || 165, 66, 660);
+            return Math.round(lbs * 0.453592 * 10) / 10;
+        }
+        return this.clamp(parseFloat(document.getElementById('weightKg').value) || 75, 30, 300);
+    }
+
+    setHeightUnit(unit) {
+        if (unit === this.heightUnit) return;
+        const cm = this.readHeightCm();
+        this.heightUnit = unit;
+        if (unit === 'ft-in') {
+            let feet = Math.floor(cm / 30.48);
+            let inches = Math.round((cm % 30.48) / 2.54);
+            if (inches === 12) { feet += 1; inches = 0; }
+            document.getElementById('heightFt').value = this.clamp(feet, 3, 8);
+            document.getElementById('heightIn').value = inches;
+        } else {
+            document.getElementById('heightCm').value = Math.round(cm);
+        }
+        document.getElementById('heightCmInput').style.display = unit === 'cm' ? '' : 'none';
+        document.getElementById('heightFtInInput').style.display = unit === 'ft-in' ? '' : 'none';
+        document.getElementById('heightUnitCm').classList.toggle('active', unit === 'cm');
+        document.getElementById('heightUnitFtIn').classList.toggle('active', unit === 'ft-in');
+        this.calculate();
+    }
+
+    setWeightUnit(unit) {
+        if (unit === this.weightUnit) return;
+        const kg = this.readWeightKg();
+        this.weightUnit = unit;
+        if (unit === 'lbs') {
+            document.getElementById('weightLbs').value = Math.round(kg * 2.20462);
+        } else {
+            document.getElementById('weightKg').value = Math.round(kg);
+        }
+        document.getElementById('weightKgInput').style.display = unit === 'kg' ? '' : 'none';
+        document.getElementById('weightLbsInput').style.display = unit === 'lbs' ? '' : 'none';
+        document.getElementById('weightUnitKg').classList.toggle('active', unit === 'kg');
+        document.getElementById('weightUnitLbs').classList.toggle('active', unit === 'lbs');
+        this.calculate();
     }
 
     updateSliderValues() {
@@ -103,8 +169,8 @@ class LifeExpectancyCalculator {
         return {
             age: parseInt(document.getElementById('age').value),
             sex: document.getElementById('sex').value,
-            height: parseInt(document.getElementById('height').value),
-            weight: parseInt(document.getElementById('weight').value),
+            height: this.readHeightCm(),
+            weight: this.readWeightKg(),
             smoking: document.getElementById('smoking').value,
             exercise: parseInt(document.getElementById('exercise').value),
             alcohol: parseInt(document.getElementById('alcohol').value),
