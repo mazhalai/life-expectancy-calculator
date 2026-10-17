@@ -9,8 +9,7 @@ class LifeExpectancyCalculator {
         this.scenarios = [];
         this.initializeEventListeners();
         this.loadScenarios();
-        this.updateSliderValues();
-        this.setupModalHandlers();
+                this.setupModalHandlers();
         this.setupUnitToggleHandlers();
     }
 
@@ -188,18 +187,11 @@ class LifeExpectancyCalculator {
     initializeEventListeners() {
         // Input change listeners
         document.getElementById('calculateBtn').addEventListener('click', () => this.calculate());
-        document.getElementById('exercise').addEventListener('input', (e) => {
-            document.getElementById('exerciseValue').textContent = e.target.value;
-        });
-        document.getElementById('alcohol').addEventListener('input', (e) => {
-            document.getElementById('alcoholValue').textContent = e.target.value;
-        });
-        document.getElementById('sleep').addEventListener('input', (e) => {
-            document.getElementById('sleepValue').textContent = e.target.value;
-        });
+        this.initializeSegmentedControl();
+        this.initializeSteppers();
 
         // All inputs should trigger calculation on change
-        document.querySelectorAll('.input-field, .slider, .checkbox-field').forEach(input => {
+        document.querySelectorAll('.input-field, .checkbox-field').forEach(input => {
             input.addEventListener('change', () => this.calculate());
         });
 
@@ -207,10 +199,38 @@ class LifeExpectancyCalculator {
         document.getElementById('exportBtn').addEventListener('click', () => this.exportReport());
     }
 
-    updateSliderValues() {
-        document.getElementById('exerciseValue').textContent = document.getElementById('exercise').value;
-        document.getElementById('alcoholValue').textContent = document.getElementById('alcohol').value;
-        document.getElementById('sleepValue').textContent = document.getElementById('sleep').value;
+    initializeSegmentedControl() {
+        const control = document.getElementById('exerciseControl');
+        const hidden = document.getElementById('exercise');
+        control.querySelectorAll('.segment').forEach(btn => {
+            btn.addEventListener('click', () => {
+                hidden.value = btn.dataset.value;
+                control.querySelectorAll('.segment').forEach(b => {
+                    const on = b === btn;
+                    b.classList.toggle('active', on);
+                    b.setAttribute('aria-pressed', on);
+                });
+                this.calculate();
+            });
+        });
+    }
+
+    initializeSteppers() {
+        document.querySelectorAll('.stepper').forEach(stepper => {
+            const input = document.getElementById(stepper.dataset.target);
+            const min = parseInt(input.min);
+            const max = parseInt(input.max);
+            const clamp = (v) => Math.min(max, Math.max(min, isNaN(v) ? min : v));
+            stepper.querySelectorAll('.stepper-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    input.value = clamp((parseInt(input.value) || 0) + parseInt(btn.dataset.step));
+                    this.calculate();
+                });
+            });
+            input.addEventListener('change', () => {
+                input.value = clamp(parseInt(input.value));
+            });
+        });
     }
 
     getInputs() {

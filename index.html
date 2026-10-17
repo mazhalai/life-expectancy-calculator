@@ -86,22 +86,28 @@
                             <label for="exercise">Exercise (days per week)</label>
                             <button class="info-btn" data-info="exercise">?</button>
                         </div>
-                        <input type="range" id="exercise" min="0" max="7" value="0" class="slider">
-                        <span id="exerciseValue">0</span> days/week
+                        <div class="segmented-control" id="exerciseControl" role="group" aria-label="Exercise days per week"><button type="button" class="segment active" data-value="0" aria-pressed="true">0</button><button type="button" class="segment" data-value="1" aria-pressed="false">1</button><button type="button" class="segment" data-value="2" aria-pressed="false">2</button><button type="button" class="segment" data-value="3" aria-pressed="false">3</button><button type="button" class="segment" data-value="4" aria-pressed="false">4</button><button type="button" class="segment" data-value="5" aria-pressed="false">5</button><button type="button" class="segment" data-value="6" aria-pressed="false">6</button><button type="button" class="segment" data-value="7" aria-pressed="false">7</button></div>
+                        <input type="hidden" id="exercise" value="0">
                         
                         <div class="input-row">
                             <label for="alcohol">Alcohol Consumption (drinks per week)</label>
                             <button class="info-btn" data-info="alcohol">?</button>
                         </div>
-                        <input type="range" id="alcohol" min="0" max="30" value="0" class="slider">
-                        <span id="alcoholValue">0</span> drinks/week
+                        <div class="stepper" data-target="alcohol">
+                            <button type="button" class="stepper-btn" data-step="-1" aria-label="Decrease alcohol drinks per week">&minus;</button>
+                            <input type="number" id="alcohol" min="0" max="30" step="1" value="0" class="input-field stepper-input" inputmode="numeric">
+                            <button type="button" class="stepper-btn" data-step="1" aria-label="Increase alcohol drinks per week">+</button>
+                        </div>
                         
                         <div class="input-row">
                             <label for="sleep">Average Sleep (hours per night)</label>
                             <button class="info-btn" data-info="sleep">?</button>
                         </div>
-                        <input type="range" id="sleep" min="4" max="12" value="7" class="slider">
-                        <span id="sleepValue">7</span> hours
+                        <div class="stepper" data-target="sleep">
+                            <button type="button" class="stepper-btn" data-step="-1" aria-label="Decrease sleep hours">&minus;</button>
+                            <input type="number" id="sleep" min="4" max="12" step="1" value="7" class="input-field stepper-input" inputmode="numeric">
+                            <button type="button" class="stepper-btn" data-step="1" aria-label="Increase sleep hours">+</button>
+                        </div>
                     </div>
 
                     <div class="form-group">
