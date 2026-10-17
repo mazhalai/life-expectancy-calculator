@@ -256,6 +256,13 @@ class LifeExpectancyCalculator {
             hypertension: document.getElementById('hypertension').checked,
             heartDisease: document.getElementById('heartDisease').checked,
             familyHistoryHD: document.getElementById('familyHistoryHD').checked,
+            familyHistoryStroke: document.getElementById('familyHistoryStroke').checked,
+            familyHistoryDiabetes: document.getElementById('familyHistoryDiabetes').checked,
+            familyHistoryCancer: document.getElementById('familyHistoryCancer').checked,
+            familyHistoryAlzheimers: document.getElementById('familyHistoryAlzheimers').checked,
+            familyHistoryHypertension: document.getElementById('familyHistoryHypertension').checked,
+            familyHistoryCholesterol: document.getElementById('familyHistoryCholesterol').checked,
+            familyHistoryEarlyDeath: document.getElementById('familyHistoryEarlyDeath').checked,
             depression: document.getElementById('depression').checked
         };
     }
@@ -372,10 +379,26 @@ class LifeExpectancyCalculator {
             adjustment -= 10;
             factors.push({ name: 'Heart Disease', impact: -10, category: 'negative' });
         }
-        if (inputs.familyHistoryHD) {
-            adjustment -= 3;
-            factors.push({ name: 'Family History of Heart Disease', impact: -3, category: 'negative' });
-        }
+        const familyHistory = [
+            { checked: inputs.familyHistoryHD, name: 'Family History of Heart Disease', impact: -4 },
+            { checked: inputs.familyHistoryStroke, name: 'Family History of Stroke', impact: -3 },
+            { checked: inputs.familyHistoryDiabetes, name: 'Family History of Diabetes', impact: -2 },
+            { checked: inputs.familyHistoryCancer, name: 'Family History of Cancer', impact: -4 },
+            { checked: inputs.familyHistoryAlzheimers, name: "Family History of Alzheimer's/Dementia", impact: -2 },
+            { checked: inputs.familyHistoryHypertension, name: 'Family History of Hypertension', impact: -2 },
+            { checked: inputs.familyHistoryCholesterol, name: 'Family History of High Cholesterol', impact: -1 },
+            { checked: inputs.familyHistoryEarlyDeath, name: 'Family History of Early Death (before 75)', impact: -5 },
+        ];
+        const familyHistoryCap = -10;
+        let familyAdjustment = 0;
+        familyHistory.forEach(item => {
+            if (item.checked) {
+                familyAdjustment += item.impact;
+                factors.push({ name: item.name, impact: item.impact, category: 'negative' });
+            }
+        });
+        adjustment += Math.max(familyAdjustment, familyHistoryCap);
+
         if (inputs.depression) {
             adjustment -= 3;
             factors.push({ name: 'Depression/Mental Health Issues', impact: -3, category: 'negative' });
@@ -514,8 +537,17 @@ HEALTH CONDITIONS
 Diabetes: ${inputs.diabetes ? 'Yes' : 'No'}
 Hypertension: ${inputs.hypertension ? 'Yes' : 'No'}
 Heart Disease: ${inputs.heartDisease ? 'Yes' : 'No'}
-Family History of Heart Disease: ${inputs.familyHistoryHD ? 'Yes' : 'No'}
 Depression/Mental Health: ${inputs.depression ? 'Yes' : 'No'}
+
+FAMILY HISTORY
+Family History of Heart Disease: ${inputs.familyHistoryHD ? 'Yes' : 'No'}
+Family History of Stroke: ${inputs.familyHistoryStroke ? 'Yes' : 'No'}
+Family History of Diabetes: ${inputs.familyHistoryDiabetes ? 'Yes' : 'No'}
+Family History of Cancer: ${inputs.familyHistoryCancer ? 'Yes' : 'No'}
+Family History of Alzheimer's/Dementia: ${inputs.familyHistoryAlzheimers ? 'Yes' : 'No'}
+Family History of Hypertension: ${inputs.familyHistoryHypertension ? 'Yes' : 'No'}
+Family History of High Cholesterol: ${inputs.familyHistoryCholesterol ? 'Yes' : 'No'}
+Family History of Early Death (before 75): ${inputs.familyHistoryEarlyDeath ? 'Yes' : 'No'}
 
 RESULTS
 Estimated Life Expectancy: ${resultValue} years

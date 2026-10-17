@@ -629,3 +629,9 @@ footer {
         width: 100%;
     }
 }
+
+.help-text {
+    font-size: 0.85rem;
+    color: #666;
+    margin-bottom: 10px;
+}

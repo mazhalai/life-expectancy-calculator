@@ -113,11 +113,69 @@ const infoData = {
     },
     'family-history': {
         title: 'Family History of Heart Disease',
-        description: 'Family history of early heart disease (in parents or siblings under age 65) indicates inherited genetic susceptibility to cardiovascular disease. This increases your risk even with healthy lifestyle habits. You may need earlier screening, more aggressive risk factor management, and preventive medication.',
+        description: 'Select if a parent, sibling, or grandparent had heart disease (heart attack, angina, bypass/stent) before about age 55 (men) or 65 (women). Inherited susceptibility raises your risk even with healthy habits; this calculator subtracts about 4 years (research range 3-5). Family history is a risk indicator, not a diagnosis: it is different from a personal heart disease diagnosis, which has its own larger adjustment.',
         research: [
             { title: 'Genetic factors in coronary heart disease and familial risk', url: 'https://scholar.google.com/scholar?q=family+history+heart+disease+mortality+genetic', authors: 'Framingham Family Heart Study' },
-            { title: 'Familial hypercholesterolemia and cardiovascular risk stratification', url: 'https://scholar.google.com/scholar?q=familial+hypercholesterolemia+cardiovascular+risk', authors: 'American Heart Association' },
-            { title: 'Heritability of cardiovascular disease risk factors', url: 'https://scholar.google.com/scholar?q=heritability+cardiovascular+risk+factors', authors: 'Genetic epidemiology studies' }
+            { title: 'Parental history of premature cardiovascular disease and offspring risk', url: 'https://scholar.google.com/scholar?q=parental+history+cardiovascular+disease+framingham+offspring', authors: 'Framingham Offspring Study' },
+            { title: 'Heritability of cardiovascular disease risk factors', url: 'https://scholar.google.com/scholar?q=heritability+cardiovascular+risk+factors', authors: 'Twin studies / genetic epidemiology' }
+        ]
+    },
+    'family-history-stroke': {
+        title: 'Family History of Stroke / Cerebrovascular Disease',
+        description: 'Select if parents, siblings, or grandparents had a stroke or TIA before about age 65. Parental stroke history is an independent predictor of stroke in offspring (Framingham), and twin studies show a genetic component. This calculator subtracts about 3 years (range 2-4). A family history is not the same as having had a stroke yourself.',
+        research: [
+            { title: 'Parental history of stroke and risk of stroke in offspring', url: 'https://scholar.google.com/scholar?q=parental+stroke+history+framingham+offspring+risk', authors: 'Seshadri et al., Stroke (2010)' },
+            { title: 'Heritability of stroke: twin studies', url: 'https://scholar.google.com/scholar?q=twin+studies+stroke+heritability', authors: 'Genetic epidemiology' }
+        ]
+    },
+    'family-history-diabetes': {
+        title: 'Family History of Diabetes',
+        description: 'Select if parents or siblings have (or had) type 2 diabetes. A first-degree relative with diabetes roughly doubles to triples your own lifetime risk, and twin studies show strong heritability. This calculator subtracts about 2-3 years (2 applied). Family history only signals higher risk; a personal diagnosis is accounted for separately and weighs much more. Healthy weight and exercise reduce the risk substantially.',
+        research: [
+            { title: 'Family history and risk of type 2 diabetes', url: 'https://scholar.google.com/scholar?q=family+history+type+2+diabetes+risk+meta-analysis', authors: 'Diabetes Care' },
+            { title: 'CDC: Diabetes risk factors and family history', url: 'https://scholar.google.com/scholar?q=CDC+diabetes+family+history+risk', authors: 'Centers for Disease Control and Prevention' }
+        ]
+    },
+    'family-history-cancer': {
+        title: 'Family History of Cancer',
+        description: 'Select if parents, siblings, or grandparents had cancer, especially before age 50-60 or with multiple relatives affected. Earlier onset suggests stronger inherited risk (e.g. BRCA1/2, Lynch syndrome). This calculator subtracts about 4 years (range 3-5). Family history differs from a personal diagnosis, and screening can often catch problems early.',
+        research: [
+            { title: 'Familial risk of cancer in the Swedish Family-Cancer Database', url: 'https://scholar.google.com/scholar?q=familial+risk+cancer+family-cancer+database', authors: 'Hemminki et al.' },
+            { title: 'Heritability of cancer among twins', url: 'https://scholar.google.com/scholar?q=heritability+cancer+twins+nordic', authors: 'Mucci et al., JAMA (2016)' },
+            { title: 'CDC: Family health history and cancer', url: 'https://scholar.google.com/scholar?q=CDC+family+health+history+cancer', authors: 'Centers for Disease Control and Prevention' }
+        ]
+    },
+    'family-history-alzheimers': {
+        title: 'Family History of Alzheimer\'s / Dementia',
+        description: 'Select if a parent or sibling developed Alzheimer\'s disease or another dementia. Having a first-degree relative with Alzheimer\'s raises risk by roughly 2x, and the APOE e4 gene is a known factor. This calculator subtracts about 2 years (range 2-3). A family history does not mean you will develop dementia, and it is not a diagnosis.',
+        research: [
+            { title: 'Family history of Alzheimer\'s disease and risk of dementia', url: 'https://scholar.google.com/scholar?q=family+history+alzheimer+disease+risk', authors: 'Alzheimer\'s Association' },
+            { title: 'Heritability of Alzheimer\'s disease: twin studies', url: 'https://scholar.google.com/scholar?q=alzheimer+disease+heritability+twin+study', authors: 'Gatz et al., Arch Gen Psychiatry (2006)' }
+        ]
+    },
+    'family-history-hypertension': {
+        title: 'Family History of Hypertension',
+        description: 'Select if parents or siblings had high blood pressure before about age 60. Blood pressure is moderately heritable (30-50%), and parental hypertension predicts offspring hypertension in the Framingham studies. This calculator subtracts about 2 years (range 2-3). It is different from having hypertension yourself, which is entered under Health Conditions.',
+        research: [
+            { title: 'Parental hypertension and offspring blood pressure', url: 'https://scholar.google.com/scholar?q=parental+hypertension+offspring+blood+pressure+framingham', authors: 'Framingham Heart Study' },
+            { title: 'WHO: Hypertension fact sheet', url: 'https://scholar.google.com/scholar?q=WHO+hypertension+risk+factors+family+history', authors: 'World Health Organization' }
+        ]
+    },
+    'family-history-cholesterol': {
+        title: 'Family History of High Cholesterol',
+        description: 'Select if parents or siblings have high cholesterol or familial hypercholesterolemia (LDL above about 190 mg/dL, often with early heart disease). Inherited cholesterol disorders raise lifetime cardiovascular risk. This calculator subtracts about 1 year (range 1-2). Your own cholesterol values are accounted for separately in Medical Metrics.',
+        research: [
+            { title: 'Familial hypercholesterolemia and cardiovascular risk', url: 'https://scholar.google.com/scholar?q=familial+hypercholesterolemia+cardiovascular+risk', authors: 'American Heart Association' },
+            { title: 'Heritability of lipid levels: twin studies', url: 'https://scholar.google.com/scholar?q=heritability+lipid+levels+twin+study', authors: 'Genetic epidemiology' }
+        ]
+    },
+    'family-history-early-death': {
+        title: 'Family History of Early Death (before age 75)',
+        description: 'Select if a parent or sibling died before age 75 from natural causes (not accidents or violence). Parental longevity is associated with offspring longevity, and the heritability of lifespan is estimated at about 20-25%. This calculator subtracts about 5 years (range 4-6). Because this overlaps with the specific conditions above, total family history adjustments are capped at 10 years.',
+        research: [
+            { title: 'Heritability of human longevity: twin studies', url: 'https://scholar.google.com/scholar?q=heritability+human+lifespan+twin+studies', authors: 'Danish Twin Registry' },
+            { title: 'Parental longevity and offspring mortality', url: 'https://scholar.google.com/scholar?q=parental+longevity+offspring+mortality+risk', authors: 'Epidemiological cohort studies' },
+            { title: 'CDC: Family health history', url: 'https://scholar.google.com/scholar?q=CDC+family+health+history+importance', authors: 'Centers for Disease Control and Prevention' }
         ]
     },
     depression: {
